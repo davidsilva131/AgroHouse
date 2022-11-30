@@ -1,6 +1,6 @@
 import { Box, Modal } from "@mui/material";
 import React from "react";
-import LoginForm from "../Home/LoginForm";
+import RegisterForm from "../Home/RegisterForm";
 
 const style = {
   position: 'absolute',
@@ -13,24 +13,24 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const LoginModal = ({ open, setOpen }) => {
+const RegisterModal = ({ openRegister, setOpenRegister }) => {
 
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setOpenRegister(false);
 
   return (
     <div>
       <Modal
-        open={open}
+        open={openRegister}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <LoginForm setOpen={setOpen} />
+          <RegisterForm setOpenRegister={setOpenRegister} />
         </Box>
       </Modal>
     </div>
   );
 };
 
-export default LoginModal;
+export default RegisterModal;

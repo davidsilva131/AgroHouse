@@ -10,10 +10,15 @@ import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import GoogleIcon from '@mui/icons-material/Google';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import { useDispatch, useSelector } from "react-redux";
+import { loginProviderAsync, userLoginAsync } from "../../redux/actions/userAction";
 
-const LoginForm = () => {
-
+const LoginForm = ({ setOpen }) => {
+  const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState()
+  const { error } = useSelector(state => state.user)
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword)
@@ -21,7 +26,22 @@ const LoginForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schemaLogin)
   });
-  const onSubmit = data => console.log(data);
+  const onSubmit = (data) => {
+    dispatch(userLoginAsync(data.email, data.password))
+    if (error) {
+      console.log(error);
+    } else {
+      setOpen(false)
+    }
+  }
+
+  const handleLoginGoogle = () => {
+    dispatch(loginProviderAsync('google'))
+  }
+  const handleLoginFacebook = () => {
+    dispatch(loginProviderAsync('facebook'))
+  }
+
   return (
     <Container>
       <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
@@ -68,6 +88,10 @@ const LoginForm = () => {
           helperText={errors?.password ? errors.password.message : null}
         />
         <Button type="submit">Ingresar</Button>
+        <div className="login__form__logos">
+          <GoogleIcon onClick={handleLoginGoogle} sx={{ cursor: 'pointer' }} />
+          <FacebookIcon onClick={handleLoginFacebook} sx={{ cursor: 'pointer' }} />
+        </div>
       </form>
     </Container>
   )

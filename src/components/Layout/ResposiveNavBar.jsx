@@ -15,12 +15,17 @@ import AdbIcon from '@mui/icons-material/Adb';
 import LoginModal from "./LoginModal";
 import { Outlet } from "react-router";
 import { StyledNavBar } from "../MaterialComponents/NavBarStyled";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogoutAsync } from "../../redux/actions/userAction";
+import RegisterModal from "./RegisterModal";
 
-const ResposiveNavBar = () => {
-
+const ResposiveNavBar = ({ setIsLoggedIn }) => {
+  const dispatch = useDispatch()
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [open, setOpen] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
+  const user = useSelector(store => store.user)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -40,9 +45,19 @@ const ResposiveNavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogout = () => {
+    dispatch(userLogoutAsync())
+    setIsLoggedIn(false)
+  }
+
   const handleOpen = () => setOpen(true);
+  const handleOpenRegister = () => setOpenRegister(true)
+
   const pages = ['Eventos', 'Mis Productos'];
-  const settings = ['Profile', 'Account', 'Dashboard', 'Logout', 'Iniciar Sesión'];
+  const settingsUser = ['Profile', 'Account', 'Cerrar Sesión'];
+  const settingsNoUser = ['Registrarse', 'Iniciar Sesión']
+
   return (
     <>
       <StyledNavBar position="sticky">
@@ -137,7 +152,7 @@ const ResposiveNavBar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="" />
+                  <Avatar alt="Remy Sharp" src={user.photoURL} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -156,23 +171,45 @@ const ResposiveNavBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting}
-                    onClick={
-                      setting === 'Iniciar Sesión'
-                        ? handleOpen
-                        : handleCloseUserMenu
-                    }
-                  >
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                {
+                  !user.uid
+                    ? (
+                      settingsNoUser.map((setting) => (
+                        <MenuItem key={setting}
+                          onClick={
+                            setting === 'Iniciar Sesión'
+                              ? handleOpen
+                              : setting === 'Registrarse'
+                              && handleOpenRegister
+
+                          }
+                        >
+                          <Typography textAlign="center">{setting}</Typography>
+                        </MenuItem>
+                      ))
+                    )
+                    : (
+                      settingsUser.map((setting) => (
+                        <MenuItem key={setting}
+                          onClick={
+                            setting === 'Cerrar Sesión'
+                              ? handleLogout
+                              : handleCloseUserMenu
+
+                          }
+                        >
+                          <Typography textAlign="center">{setting}</Typography>
+                        </MenuItem>
+                      ))
+                    )
+                }
               </Menu>
             </Box>
           </Toolbar>
         </Container>
       </StyledNavBar>
       <LoginModal open={open} setOpen={setOpen} />
+      <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />
       <Outlet />
     </>
   )

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AppBar from '@mui/material/AppBar';
+//import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -11,10 +11,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+//import AdbIcon from '@mui/icons-material/Adb';
 import LoginModal from "./LoginModal";
 import { Outlet } from "react-router";
 import { StyledNavBar } from "../MaterialComponents/NavBarStyled";
+import logo1 from '../Assets/Logo/blancoT.png'
+import './styleLogo.scss'
 
 const ResposiveNavBar = () => {
 
@@ -41,14 +43,14 @@ const ResposiveNavBar = () => {
     setAnchorElUser(null);
   };
   const handleOpen = () => setOpen(true);
-  const pages = ['Eventos', 'Mis Productos'];
-  const settings = ['Profile', 'Account', 'Dashboard', 'Logout', 'Iniciar Sesión'];
+  const pages = ['Eventos', 'Mis Productos', 'Campesinos y regiones'];
+  const settings = ['Mi perfil', 'Crea una cuenta', 'AgroHouse', 'Cerrar sesión', 'Iniciar Sesión'];
   return (
     <>
       <StyledNavBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            
             <Typography
               variant="h6"
               noWrap
@@ -64,7 +66,7 @@ const ResposiveNavBar = () => {
                 textDecoration: 'none',
               }}
             >
-              AgroHouse
+              <img src={logo1} alt="logo" className="logoNavBar"/>
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -103,7 +105,7 @@ const ResposiveNavBar = () => {
                 ))}
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          
             <Typography
               variant="h5"
               noWrap
@@ -120,14 +122,14 @@ const ResposiveNavBar = () => {
                 textDecoration: 'none',
               }}
             >
-              AgroHouse
+              <img src={logo1} alt="logo" className="logoNavBar"/>
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
                 <Button
                   key={page}
                   onClick={() => handlePage(page)}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
+                  sx={{ my: 2, color: 'white', display: 'block', fontFamily:'arial' }}
                 >
                   {page}
                 </Button>

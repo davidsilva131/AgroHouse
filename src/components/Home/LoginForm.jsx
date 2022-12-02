@@ -14,6 +14,8 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { useDispatch, useSelector } from "react-redux";
 import { loginProviderAsync, userLoginAsync } from "../../redux/actions/userAction";
+import { GreenButton } from "../MaterialComponents/ButtonStyled";
+import { CssTextField } from "../MaterialComponents/TextFieldStyled";
 
 const LoginForm = ({ setOpen }) => {
   const dispatch = useDispatch()
@@ -48,7 +50,7 @@ const LoginForm = ({ setOpen }) => {
         <Typography mb='20px' textAlign='center' alignSelf='center' variant="h4" component="h4">
           Iniciar Sesión
         </Typography>
-        <TextField
+        <CssTextField
           type='email'
           placeholder="Correo"
           variant="standard"
@@ -63,7 +65,7 @@ const LoginForm = ({ setOpen }) => {
           error={!!errors?.email}
           helperText={errors?.email ? errors.email.message : null}
         />
-        <TextField
+        <CssTextField
           type={showPassword ? 'text' : 'password'}
           placeholder='Contraseña'
           variant="standard"
@@ -87,7 +89,7 @@ const LoginForm = ({ setOpen }) => {
           error={!!errors?.password}
           helperText={errors?.password ? errors.password.message : null}
         />
-        <Button type="submit">Ingresar</Button>
+        <GreenButton type="submit">Ingresar</GreenButton>
         <div className="login__form__logos">
           <GoogleIcon onClick={handleLoginGoogle} sx={{ cursor: 'pointer' }} />
           <FacebookIcon onClick={handleLoginFacebook} sx={{ cursor: 'pointer' }} />

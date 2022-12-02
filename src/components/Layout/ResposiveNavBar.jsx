@@ -153,7 +153,7 @@ const ResposiveNavBar = ({ setIsLoggedIn }) => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={user.photoURL} />
+                  <Avatar sx={{ width: '56px', height: '56px' }} alt="Remy Sharp" src={user.photoURL} />
                 </IconButton>
               </Tooltip>
               <Menu

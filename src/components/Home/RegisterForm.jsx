@@ -14,6 +14,8 @@ import { fileUpLoad } from "../../services/fileUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegisterAsync } from "../../redux/actions/userAction";
 import Swal from "sweetalert2";
+import { GreenButton } from "../MaterialComponents/ButtonStyled";
+import { CssTextField } from "../MaterialComponents/TextFieldStyled";
 
 const RegisterForm = ({ setOpenRegister }) => {
   const [showPassword, setShowPassword] = useState(false)
@@ -77,7 +79,7 @@ const RegisterForm = ({ setOpenRegister }) => {
         <Typography mb='20px' textAlign='center' alignSelf='center' variant="h4" component="h4">
           Registrate
         </Typography>
-        <TextField
+        <CssTextField
           type='email'
           placeholder="Correo"
           variant="standard"
@@ -92,7 +94,7 @@ const RegisterForm = ({ setOpenRegister }) => {
           error={!!errors?.email}
           helperText={errors?.email ? errors.email.message : null}
         />
-        <TextField
+        <CssTextField
           type='text'
           placeholder="Nombre"
           variant="standard"
@@ -107,7 +109,7 @@ const RegisterForm = ({ setOpenRegister }) => {
           error={!!errors?.name}
           helperText={errors?.name ? errors.name.message : null}
         />
-        <TextField
+        <CssTextField
           type={showPassword ? 'text' : 'password'}
           placeholder='Contraseña'
           variant="standard"
@@ -131,8 +133,8 @@ const RegisterForm = ({ setOpenRegister }) => {
           error={!!errors?.password}
           helperText={errors?.password ? errors.password.message : null}
         />
-        <TextField fullWidth type="file" {...register("image")} />
-        <Button type="submit">Registrarse</Button>
+        <CssTextField fullWidth type="file" {...register("image")} />
+        <GreenButton type="submit">Registrarse</GreenButton>
       </form>
     </Container>
   )

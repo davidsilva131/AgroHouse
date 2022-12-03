@@ -26,7 +26,7 @@ const LoginModal = ({ open, setOpen }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <LoginForm />
+          <LoginForm setOpen={setOpen} />
         </Box>
       </Modal>
     </div>

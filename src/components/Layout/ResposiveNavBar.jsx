@@ -17,6 +17,7 @@ import { Outlet } from "react-router";
 import { StyledNavBar } from "../MaterialComponents/NavBarStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogoutAsync } from "../../redux/actions/userAction";
+import { useNavigate } from "react-router-dom";
 import RegisterModal from "./RegisterModal";
 import logo1 from '../Assets/Logo/blancoT.png'
 import './styleLogo.scss'
@@ -28,7 +29,7 @@ const ResposiveNavBar = ({ setIsLoggedIn }) => {
   const [open, setOpen] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const user = useSelector(store => store.user)
-
+  const navigate = useNavigate()
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -53,11 +54,15 @@ const ResposiveNavBar = ({ setIsLoggedIn }) => {
     setIsLoggedIn(false)
   }
 
+  const handleProfile = () => {
+    navigate('profile')
+  }
+
   const handleOpen = () => setOpen(true);
   const handleOpenRegister = () => setOpenRegister(true)
 
   const pages = ['Eventos', 'Productos'];
-  const settingsUser = ['Profile', 'Account', 'Cerrar Sesión'];
+  const settingsUser = ['Perfil', 'Cerrar Sesión'];
   const settingsNoUser = ['Registrarse', 'Iniciar Sesión']
   return (
     <>
@@ -195,7 +200,8 @@ const ResposiveNavBar = ({ setIsLoggedIn }) => {
                           onClick={
                             setting === 'Cerrar Sesión'
                               ? handleLogout
-                              : handleCloseUserMenu
+                              : setting === 'Perfil'
+                              && handleProfile
 
                           }
                         >

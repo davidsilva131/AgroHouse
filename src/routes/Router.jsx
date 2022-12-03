@@ -7,6 +7,8 @@ import { auth } from "../firebase/firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
 import PublicRouter from "./PublicRouter";
 import { userLoginSync } from "../redux/actions/userAction";
+import PrivateRouter from "./PrivateRouter";
+import Profile from "../components/pages/Profile";
 
 const Router = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(undefined)
@@ -51,6 +53,11 @@ const Router = () => {
       <Routes>
         <Route element={<ResposiveNavBar setIsLoggedIn={setIsLoggedIn} />}>
           <Route path="/" element={<Home />} />
+        </Route>
+        <Route element={<PrivateRouter isAuthentication={isLoggedIn} />}>
+          <Route element={<ResposiveNavBar setIsLoggedIn={setIsLoggedIn} />}>
+            <Route path="profile" element={<Profile />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

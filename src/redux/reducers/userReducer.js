@@ -12,8 +12,18 @@ export const userReducer = (state = {}, action) => {
         ...state,
         ...action.payload,
       }
+    case userTypes.UPDATE_USER:
+      return {
+        ...state,
+        ...action.payload,
+      }
     case userTypes.USER_LOGOUT:
       return {}
+    case userTypes.UPDATE_EMAIL:
+      return {
+        ...state,
+        email: action.payload,
+      }
 
     default:
       return state

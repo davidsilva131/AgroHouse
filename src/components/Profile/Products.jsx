@@ -2,7 +2,9 @@ import { Card, CardActionArea, CardContent, CardMedia } from "@mui/material";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import { getOwnProductsAsync } from "../../redux/actions/allProductsAction";
+import { deleteProductAsync } from "../../redux/actions/productAction";
 import { DeleteChip, EditChip } from "../MaterialComponents/ChipsStyled";
 import ModalEditProduct from "./ModalEditProduct";
 import ModalEditProfile from "./ModalEditProfile";
@@ -23,6 +25,29 @@ const Products = () => {
   const handleEdit = (product) => {
     setProductToEdit(product)
     setOpenEditProduct(true)
+  }
+
+  const handleDelete = ({ id }) => {
+    Swal.fire({
+      title: 'Seguro de que quiere eliminar este producto?',
+      text: "Esta acción no es revertible!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteProductAsync(id))
+        Swal.fire(
+          'Eliminado!',
+          'Este producto ha sido eliminado.',
+          'success'
+        )
+      }
+      dispatch(getOwnProductsAsync(uid))
+    })
   }
 
   return (
@@ -46,7 +71,7 @@ const Products = () => {
                   <span>${product.price}</span>
                   <div className="card__buttons">
                     <EditChip onClick={() => handleEdit(product)} label="Editar" />
-                    <DeleteChip label="Eliminar" />
+                    <DeleteChip onClick={() => handleDelete(product)} label="Eliminar" />
                   </div>
                 </div>
               </CardContent>

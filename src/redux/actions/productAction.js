@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { database } from "../../firebase/firebaseConfig";
 import { productTypes } from "../types/productTypes";
 
@@ -45,5 +45,15 @@ const updateProductSync = (product) => {
   return {
     type: productTypes.UPDATE_PRODUCT,
     payload: product
+  }
+}
+
+export const deleteProductAsync = (id) => {
+  return async (dispatch) => {
+    try {
+      await deleteDoc(doc(database, collectionName, id))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

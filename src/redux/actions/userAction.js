@@ -141,7 +141,11 @@ export const updateUserAsync = (user) => {
         dispatch(updateUserSync(user));
       })
       .catch((error) => {
-        console.log(error);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        dispatch(updateUserSync({ user, error: true, errorMessage }))
       })
   }
 }
@@ -160,7 +164,11 @@ export const updateUserEmailAsync = (email) => {
         dispatch(updateUserEmailSync(email))
       })
       .catch((error) => {
-        console.log(error);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        dispatch(userLoginSync({ email, error: true, errorMessage }))
       })
   }
 }

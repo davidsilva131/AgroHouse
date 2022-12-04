@@ -1,9 +1,7 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { IconButton, InputAdornment, Typography } from "@mui/material";
+import { InputAdornment, Typography } from "@mui/material";
 import { Container } from "@mui/system";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { schemaRegister } from "../../services/data";
 import EmailIcon from '@mui/icons-material/Email';
 import '../Home/RegisterForm'
 import PersonIcon from '@mui/icons-material/Person';

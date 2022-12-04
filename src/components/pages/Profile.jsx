@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { GreenButton } from "../MaterialComponents/ButtonStyled";
 import ModalAddProduct from "../Profile/ModalAddProduct";
+import ModalEditProduct from "../Profile/ModalEditProduct";
 import ModalEditProfile from "../Profile/ModalEditProfile";
 import Products from "../Profile/Products";
 import './Profile.scss'

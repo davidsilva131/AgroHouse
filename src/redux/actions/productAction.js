@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { database } from "../../firebase/firebaseConfig";
 import { productTypes } from "../types/productTypes";
 
@@ -21,6 +21,29 @@ export const addProductAsync = (product) => {
 const addProductSync = (product) => {
   return {
     type: productTypes.CREATE_PRODUCT,
+    payload: product
+  }
+}
+
+export const updateProdutAsync = (product, id) => {
+  return async (dispatch) => {
+    try {
+      const restaurantRef = doc(database, collectionName, id)
+      const docs = await updateDoc(restaurantRef, {
+        ...product
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    finally {
+      dispatch(updateProductSync(product))
+    }
+  }
+}
+
+const updateProductSync = (product) => {
+  return {
+    type: productTypes.UPDATE_PRODUCT,
     payload: product
   }
 }

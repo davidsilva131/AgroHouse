@@ -2,9 +2,10 @@ import { Container } from "@mui/material";
 import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import './Home.scss'
-import image1 from '../Assets/Images/campesino.jpg';
-import image2 from '../Assets/Images/campesino2.jpg';
-import image3 from '../Assets/Images/campo.jpg';
+import image1 from '../Assets/Images/c1.jpg';
+import image2 from '../Assets/Images/c2.jpg';
+import image3 from '../Assets/Images/c3.jpg';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 const Home = () => {
@@ -19,7 +20,7 @@ const Home = () => {
       <Container maxWidth='fixed'>
         <section className="home">
           <span>
-            {/* <Carousel activeIndex={index} onSelect={handleSelect}>
+            <Carousel activeIndex={index} onSelect={handleSelect}>
               <Carousel.Item>
                 <img
                   className="d-block w-100"
@@ -57,9 +58,9 @@ const Home = () => {
                   </p>
                 </Carousel.Caption>
               </Carousel.Item>
-            </Carousel> */}
+            </Carousel>
             <div className="container_image">
-              <img src={image1} alt='image1' className="image1"/>
+              
             </div>
           </span>
         </section>

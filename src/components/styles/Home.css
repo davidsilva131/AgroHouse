@@ -1,0 +1,79 @@
+.iconos{
+  padding: 5rem 0;
+}
+@media(min-width: 768px) {
+  .iconos{
+    display: flex;
+    gap: 2rem;
+  }
+}
+
+.icono {
+  text-align: center;
+  margin-bottom: calc( 5rem / 2);
+}
+
+.icono:last-of-type {
+  margin: 0;
+}
+
+@media (min-width: 798px){
+  .icono{
+    margin: 0;
+  }
+}
+
+.icono img {
+  width: 5rem;
+  margin: 0 auto;
+}
+
+.icono h3{
+  text-transform: uppercase;
+  margin-top: calc( 5rem / 2);
+}
+
+/*sobre cocteles*/
+
+.contenedor{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.texto{
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  padding-top: 2rem;
+}
+
+@media(min-width:768px){
+
+  .contenedor{
+    display: flex;
+    flex-direction: row;
+    gap: 1;
+  }
+  
+  .texto{
+    width: 50%;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 2;
+    padding: 5rem 0;
+    text-align: left;
+  }
+  
+  .imagen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    
+  }
+}
+
+
+
+

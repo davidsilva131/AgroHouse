@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, updateProfile, signOut, signInWithPopup } from "firebase/auth"
+import { createUserWithEmailAndPassword, updateProfile, signOut, signInWithPopup, updateEmail } from "firebase/auth"
 import { auth, facebook, google } from "../../firebase/firebaseConfig"
 import { userTypes } from "../types/userTypes"
 import { signInWithEmailAndPassword } from 'firebase/auth'
@@ -129,3 +129,53 @@ const userLogoutSync = () => {
     type: userTypes.USER_LOGOUT,
   };
 };
+
+
+export const updateUserAsync = (user) => {
+  return async (dispatch) => {
+    await updateProfile(auth.currentUser, {
+      displayName: user.name,
+      photoURL: user.photoURL
+    })
+      .then(() => {
+        dispatch(updateUserSync(user));
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        dispatch(updateUserSync({ user, error: true, errorMessage }))
+      })
+  }
+}
+
+const updateUserSync = (user) => {
+  return {
+    type: userTypes.UPDATE_USER,
+    payload: { ...user }
+  }
+}
+
+export const updateUserEmailAsync = (email) => {
+  return async (dispatch) => {
+    await updateEmail(auth.currentUser, email)
+      .then(() => {
+        dispatch(updateUserEmailSync(email))
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        dispatch(userLoginSync({ email, error: true, errorMessage }))
+      })
+  }
+}
+
+const updateUserEmailSync = (email) => {
+  return {
+    type: userTypes.UPDATE_EMAIL,
+    payload: email
+  }
+}

@@ -1,6 +1,6 @@
 import { Box, Modal } from "@mui/material";
 import React from "react";
-import LoginForm from "../Home/LoginForm";
+import EditProdutcForm from "./EditProdutcForm";
 
 const style = {
   position: 'absolute',
@@ -13,8 +13,8 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const LoginModal = ({ open, setOpen }) => {
 
+const ModalEditProduct = ({ open, setOpen, product }) => {
   const handleClose = () => setOpen(false);
 
   return (
@@ -26,11 +26,11 @@ const LoginModal = ({ open, setOpen }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <LoginForm setOpen={setOpen} />
+          <EditProdutcForm setOpen={setOpen} product={product} />
         </Box>
       </Modal>
     </div>
   );
 };
 
-export default LoginModal;
+export default ModalEditProduct;

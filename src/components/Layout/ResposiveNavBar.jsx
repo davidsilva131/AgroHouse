@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-//import AppBar from '@mui/material/AppBar';
+////import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -15,15 +15,21 @@ import MenuItem from '@mui/material/MenuItem';
 import LoginModal from "./LoginModal";
 import { Outlet } from "react-router";
 import { StyledNavBar } from "../MaterialComponents/NavBarStyled";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogoutAsync } from "../../redux/actions/userAction";
+import { useNavigate } from "react-router-dom";
+import RegisterModal from "./RegisterModal";
 import logo1 from '../Assets/Logo/blancoT.png'
 import './styleLogo.scss'
 
-const ResposiveNavBar = () => {
-
+const ResposiveNavBar = ({ setIsLoggedIn }) => {
+  const dispatch = useDispatch()
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [open, setOpen] = useState(false);
-
+  const [openRegister, setOpenRegister] = useState(false);
+  const user = useSelector(store => store.user)
+  const navigate = useNavigate()
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -42,15 +48,28 @@ const ResposiveNavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogout = () => {
+    dispatch(userLogoutAsync())
+    setIsLoggedIn(false)
+  }
+
+  const handleProfile = () => {
+    navigate('profile')
+  }
+
   const handleOpen = () => setOpen(true);
-  const pages = ['Eventos', 'Mis Productos', 'Campesinos y regiones'];
-  const settings = ['Mi perfil', 'Crea una cuenta', 'AgroHouse', 'Cerrar sesión', 'Iniciar Sesión'];
+  const handleOpenRegister = () => setOpenRegister(true)
+
+  const pages = ['Eventos', 'Productos'];
+  const settingsUser = ['Perfil', 'Cerrar Sesión'];
+  const settingsNoUser = ['Registrarse', 'Iniciar Sesión']
   return (
     <>
       <StyledNavBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            
+
             <Typography
               variant="h6"
               noWrap
@@ -66,7 +85,7 @@ const ResposiveNavBar = () => {
                 textDecoration: 'none',
               }}
             >
-              <img src={logo1} alt="logo" className="logoNavBar"/>
+              <img src={logo1} alt="logo" className="logoNavBar" />
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -105,7 +124,7 @@ const ResposiveNavBar = () => {
                 ))}
               </Menu>
             </Box>
-          
+
             <Typography
               variant="h5"
               noWrap
@@ -122,14 +141,14 @@ const ResposiveNavBar = () => {
                 textDecoration: 'none',
               }}
             >
-              <img src={logo1} alt="logo" className="logoNavBar"/>
+              <img src={logo1} alt="logo" className="logoNavBar" />
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
                 <Button
                   key={page}
                   onClick={() => handlePage(page)}
-                  sx={{ my: 2, color: 'white', display: 'block', fontFamily:'arial' }}
+                  sx={{ my: 2, color: 'white', display: 'block', fontFamily: 'arial' }}
                 >
                   {page}
                 </Button>
@@ -139,7 +158,7 @@ const ResposiveNavBar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="" />
+                  <Avatar sx={{ width: '56px', height: '56px' }} alt="Remy Sharp" src={user.photoURL} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -158,23 +177,46 @@ const ResposiveNavBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting}
-                    onClick={
-                      setting === 'Iniciar Sesión'
-                        ? handleOpen
-                        : handleCloseUserMenu
-                    }
-                  >
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                {
+                  !user.uid
+                    ? (
+                      settingsNoUser.map((setting) => (
+                        <MenuItem key={setting}
+                          onClick={
+                            setting === 'Iniciar Sesión'
+                              ? handleOpen
+                              : setting === 'Registrarse'
+                              && handleOpenRegister
+
+                          }
+                        >
+                          <Typography textAlign="center">{setting}</Typography>
+                        </MenuItem>
+                      ))
+                    )
+                    : (
+                      settingsUser.map((setting) => (
+                        <MenuItem key={setting}
+                          onClick={
+                            setting === 'Cerrar Sesión'
+                              ? handleLogout
+                              : setting === 'Perfil'
+                              && handleProfile
+
+                          }
+                        >
+                          <Typography textAlign="center">{setting}</Typography>
+                        </MenuItem>
+                      ))
+                    )
+                }
               </Menu>
             </Box>
           </Toolbar>
         </Container>
       </StyledNavBar>
       <LoginModal open={open} setOpen={setOpen} />
+      <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />
       <Outlet />
     </>
   )
